@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="gson-2.8.2">
+    <CLASSES>
+      <root url="jar://D:/Users/Minwa/Downloads/gson-2.8.2.jar!/" />
+      <root url="jar://D:/Users/Minwa/Downloads/jsoup-1.13.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
