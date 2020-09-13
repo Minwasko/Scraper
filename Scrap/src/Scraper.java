@@ -64,8 +64,6 @@ public class Scraper {
                     wantedProduct.setProductPurposeTen(purposes[10]);
                 } catch (Exception ignored) {
                 }
-            } else {
-                wantedProduct.setProductPurposeOne("No purpose given"); // ADDED PRODUCT PURPOSE IF NONE WAS GIVEN
             }
             wantedProduct.setTitle(product.select("div.ttl").text()); // ADDED PRODUCT TITLE
             wantedProduct.setLineTitle(lineTitle); // ADDED PRODUCT LINE TITLE
@@ -96,10 +94,10 @@ public class Scraper {
                 .replace("</div>", "").replace("<div role=\"tabpanel\" class=\"tab-pane fade in active\" id=\"product1\">", "")
                 .replace("<b>", "").replace("</b>", "")); // ADDED PRODUCT INFORMATION
         Elements productCharacteristics = productInfo.select("div.product-tab").select("div#product2").select("p");
-        product.setProductBrand(productCharacteristics.get(0).text()); // ADDED PRODUCT BRAND
-        product.setProductVolume(productCharacteristics.get(1).text()); // ADDED PRODUCT VOLUME
-        product.setProductBarcode(productCharacteristics.get(2).text()); // ADDED PRODUCT BARCODE
-        product.setProductComposition(productCharacteristics.get(3).text()); // ADDED PRODUCT COMPOSITION
+        product.setProductBrand(productCharacteristics.get(0).text().replace("Brend: ", "")); // ADDED PRODUCT BRAND
+        product.setProductVolume(productCharacteristics.get(1).text().replace("Volume: ", "")); // ADDED PRODUCT VOLUME
+        product.setProductBarcode(productCharacteristics.get(2).text().replace("Barcode: ", "")); // ADDED PRODUCT BARCODE
+        product.setProductComposition(productCharacteristics.get(3).text().replace("Composition: ", "")); // ADDED PRODUCT COMPOSITION
         Elements productNavigationTabs = productInfo.select("div.breadcrumbs").select("li.item");
         try { // ADDING PRODUCT NAVIGATION
             product.setProductNavigationOne(productNavigationTabs.get(0).text());
