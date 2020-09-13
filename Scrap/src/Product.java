@@ -2,7 +2,16 @@ public class Product {
 
     private String title; //
     private String lineTitle; //
-    private String productPurpose; //
+    private String productPurposeOne; //
+    private String productPurposeTwo; //
+    private String productPurposeThree; //
+    private String productPurposeFour; //
+    private String productPurposeFive; //
+    private String productPurposeSix; //
+    private String productPurposeSeven; //
+    private String productPurposeEight; //
+    private String productPurposeNine; //
+    private String productPurposeTen; //
     private String productLink; //
     private String productPicture; //
     private String productInformation; //
@@ -32,12 +41,84 @@ public class Product {
         this.lineTitle = lineTitle;
     }
 
-    public String getProductPurpose() {
-        return productPurpose;
+    public String getProductPurposeOne() {
+        return productPurposeOne;
     }
 
-    public void setProductPurpose(String productPurpose) {
-        this.productPurpose = productPurpose;
+    public void setProductPurposeOne(String productPurposeOne) {
+        this.productPurposeOne = productPurposeOne;
+    }
+
+    public String getProductPurposeTwo() {
+        return productPurposeTwo;
+    }
+
+    public void setProductPurposeTwo(String productPurposeTwo) {
+        this.productPurposeTwo = productPurposeTwo;
+    }
+
+    public String getProductPurposeThree() {
+        return productPurposeThree;
+    }
+
+    public void setProductPurposeThree(String productPurposeThree) {
+        this.productPurposeThree = productPurposeThree;
+    }
+
+    public String getProductPurposeFour() {
+        return productPurposeFour;
+    }
+
+    public void setProductPurposeFour(String productPurposeFour) {
+        this.productPurposeFour = productPurposeFour;
+    }
+
+    public String getProductPurposeFive() {
+        return productPurposeFive;
+    }
+
+    public void setProductPurposeFive(String productPurposeFive) {
+        this.productPurposeFive = productPurposeFive;
+    }
+
+    public String getProductPurposeSix() {
+        return productPurposeSix;
+    }
+
+    public void setProductPurposeSix(String productPurposeSix) {
+        this.productPurposeSix = productPurposeSix;
+    }
+
+    public String getProductPurposeSeven() {
+        return productPurposeSeven;
+    }
+
+    public void setProductPurposeSeven(String productPurposeSeven) {
+        this.productPurposeSeven = productPurposeSeven;
+    }
+
+    public String getProductPurposeEight() {
+        return productPurposeEight;
+    }
+
+    public void setProductPurposeEight(String productPurposeEight) {
+        this.productPurposeEight = productPurposeEight;
+    }
+
+    public String getProductPurposeNine() {
+        return productPurposeNine;
+    }
+
+    public void setProductPurposeNine(String productPurposeNine) {
+        this.productPurposeNine = productPurposeNine;
+    }
+
+    public String getProductPurposeTen() {
+        return productPurposeTen;
+    }
+
+    public void setProductPurposeTen(String productPurposeTen) {
+        this.productPurposeTen = productPurposeTen;
     }
 
     public String getProductLink() {
@@ -141,7 +222,16 @@ public class Product {
         return "Product{" +
                 "title='" + title + '\'' +
                 ", lineTitle='" + lineTitle + '\'' +
-                ", productPurpose='" + productPurpose + '\'' +
+                ", productPurposeOne='" + productPurposeOne + '\'' +
+                ", productPurposeTwo='" + productPurposeTwo + '\'' +
+                ", productPurposeThree='" + productPurposeThree + '\'' +
+                ", productPurposeFour='" + productPurposeFour + '\'' +
+                ", productPurposeFive='" + productPurposeFive + '\'' +
+                ", productPurposeSix='" + productPurposeSix + '\'' +
+                ", productPurposeSeven='" + productPurposeSeven + '\'' +
+                ", productPurposeEight='" + productPurposeEight + '\'' +
+                ", productPurposeNine='" + productPurposeNine + '\'' +
+                ", productPurposeTen='" + productPurposeTen + '\'' +
                 ", productLink='" + productLink + '\'' +
                 ", productPicture='" + productPicture + '\'' +
                 ", productInformation='" + productInformation + '\'' +
