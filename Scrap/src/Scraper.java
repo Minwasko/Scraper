@@ -50,7 +50,7 @@ public class Scraper {
             Elements productSpans = product.select("span.text");
             if (productSpans.size() > 1) {
                 String purpose = product.select("div.descr-param").select("span.text").get(1).text(); // ADDED PRODUCT PURPOSE
-                String[] purposes = purpose.split(",");
+                String[] purposes = purpose.split(", ");
                 try {
                     wantedProduct.setProductPurposeOne(purposes[1]);
                     wantedProduct.setProductPurposeTwo(purposes[2]);
@@ -89,10 +89,16 @@ public class Scraper {
         Elements productInfo = Jsoup.connect(productURL).get().select("div.product");
         product.setProductPicture(URL_START + productInfo.select("div.product-pic").select("div.product-pic-wrap").select("a[href]")
                 .attr("href")); // ADDED PRODUCT PICTURE
-        product.setProductInformation(productInfo.select("div.product-tab").select("div#product1").toString().replace("<p>", "")
-                .replace("</p>", "").replace("<br>", "").replace("<div>", "")
-                .replace("</div>", "").replace("<div role=\"tabpanel\" class=\"tab-pane fade in active\" id=\"product1\">", "")
-                .replace("<b>", "").replace("</b>", "")); // ADDED PRODUCT INFORMATION
+        Elements productInformation = productInfo.select("div.product-tab").select("div#product1");
+        StringBuilder builder = new StringBuilder();
+        for (Element information : productInformation.select("p")) {
+            if (information.text().equals(productInformation.select("p").get(productInformation.select("p").size() - 1).text())) {
+                builder.append(information.text());
+            } else if (information.text().length() > 0) {
+                builder.append(information.text()).append("\n");
+            }
+        }
+        product.setProductInformation(builder.toString());
         Elements productCharacteristics = productInfo.select("div.product-tab").select("div#product2").select("p");
         product.setProductBrand(productCharacteristics.get(0).text().replace("Brend: ", "")); // ADDED PRODUCT BRAND
         product.setProductVolume(productCharacteristics.get(1).text().replace("Volume: ", "")); // ADDED PRODUCT VOLUME
