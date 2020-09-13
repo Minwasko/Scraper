@@ -1,3 +1,5 @@
+package belita;
+
 public class Product {
 
     private String title; //
@@ -219,7 +221,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "belita.Product{" +
                 "title='" + title + '\'' +
                 ", lineTitle='" + lineTitle + '\'' +
                 ", productPurposeOne='" + productPurposeOne + '\'' +

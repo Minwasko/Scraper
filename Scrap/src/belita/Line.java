@@ -1,3 +1,5 @@
+package belita;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class Line {
 
     @Override
     public String toString() {
-        return "Line{" +
+        return "belita.Line{" +
                 "title='" + title + '\'' +
                 ", products=" + products +
                 '}';
