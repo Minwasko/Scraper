@@ -1,5 +1,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Time;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,15 +29,10 @@ public class Scraper {
                 "purpose2", "purpose3", "purpose4", "purpose5", "purpose6", "purpose7", "purpose8", "purpose9", "purpose10",
                 "productLink", "picture", "information", "brand", "volume", "barcode", "composition", "navigation1", "navigation2", "navigation3", "navigation4", "navigation5"};
         writer.writeNext(header);
-        int n = 0;
         Elements lines = Jsoup.connect(URL_START + "/en/brendy/").get().select("div.brands-list");
         for (Element line : lines.select("div.item")) {
             getProductsForLine(URL_START + line.select("a.item_w").attr("href"),
                     line.select("a.item_w").attr("title"));
-            n++;
-            if (n == 5) {
-                break;
-            }
         }
         writer.close();
     }
@@ -84,40 +80,57 @@ public class Scraper {
     }
 
     public Product getProductInfo(String productURL, Product product) throws IOException {
-        System.out.println(productURL);
-        product.setProductLink(productURL); // ADDED PRODUCT LINK
+        try {
+            System.out.println(productURL);
+            product.setProductLink(productURL); // ADDED PRODUCT LINK
+        } catch (Exception ignored) { }
         Elements productInfo = Jsoup.connect(productURL).get().select("div.product");
+        try {
         product.setProductPicture(URL_START + productInfo.select("div.product-pic").select("div.product-pic-wrap").select("a[href]")
                 .attr("href")); // ADDED PRODUCT PICTURE
+        } catch (Exception ignored) { }
         Elements productInformation = productInfo.select("div.product-tab").select("div#product1");
-        StringBuilder builder = new StringBuilder();
-        for (Element information : productInformation.select("p")) {
-            if (information.text().equals(productInformation.select("p").get(productInformation.select("p").size() - 1).text())) {
-                builder.append(information.text());
-            } else if (information.text().length() > 0) {
-                builder.append(information.text()).append("\n");
+        try {
+            StringBuilder builder = new StringBuilder();
+            for (Element information : productInformation.select("p")) {
+                if (information.text().equals(productInformation.select("p").get(productInformation.select("p").size() - 1).text())) {
+                    builder.append(information.text());
+                } else if (information.text().length() > 0) {
+                    builder.append(information.text()).append("\n");
+                }
             }
-        }
-        product.setProductInformation(builder.toString());
+            product.setProductInformation(builder.toString());
+        } catch (Exception ignored) { }
         Elements productCharacteristics = productInfo.select("div.product-tab").select("div#product2").select("p");
-        product.setProductBrand(productCharacteristics.get(0).text().replace("Brend: ", "")); // ADDED PRODUCT BRAND
-        product.setProductVolume(productCharacteristics.get(1).text().replace("Volume: ", "")); // ADDED PRODUCT VOLUME
-        product.setProductBarcode(productCharacteristics.get(2).text().replace("Barcode: ", "")); // ADDED PRODUCT BARCODE
+        try {
+            product.setProductBrand(productCharacteristics.get(0).text().replace("Brend: ", "")); // ADDED PRODUCT BRAND
+        } catch (Exception ignored) { }
+        try {
+            product.setProductVolume(productCharacteristics.get(1).text().replace("Volume: ", "")); // ADDED PRODUCT VOLUME
+        } catch (Exception ignored) { }
+        try {
+            product.setProductBarcode(productCharacteristics.get(2).text().replace("Barcode: ", "")); // ADDED PRODUCT BARCODE
+        } catch (Exception ignored) { }
+        try {
         product.setProductComposition(productCharacteristics.get(3).text().replace("Composition: ", "")); // ADDED PRODUCT COMPOSITION
+        } catch (Exception ignored) { }
+        try {
         Elements productNavigationTabs = productInfo.select("div.breadcrumbs").select("li.item");
-        try { // ADDING PRODUCT NAVIGATION
+            // ADDING PRODUCT NAVIGATION
             product.setProductNavigationOne(productNavigationTabs.get(0).text());
             product.setProductNavigationTwo(productNavigationTabs.get(1).text());
             product.setProductNavigationThree(productNavigationTabs.get(2).text());
             product.setProductNavigationFour(productNavigationTabs.get(3).text());
             product.setProductNavigationFive(productNavigationTabs.get(4).text());
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) { }
         return product;
     }
 
     public static void main(String[] args) throws IOException {
+        long start = System.currentTimeMillis();
         Scraper scraper = new Scraper();
         scraper.getAllLines();
+        long end = System.currentTimeMillis();
+        System.out.println((end - start) / 1000);
     }
 }
