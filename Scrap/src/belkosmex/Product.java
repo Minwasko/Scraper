@@ -2,8 +2,8 @@ package belkosmex;
 
 public class Product {
 
-    private String productNavigationOne = "Главная"; //
-    private String productNavigationTwo = "Каталог"; //
+    private String productNavigationOne = "Main"; //
+    private String productNavigationTwo = "Catalog"; //
     private String productNavigationThree; //
     private String productNavigationFour; //
     private String title; //

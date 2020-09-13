@@ -26,7 +26,7 @@ public class Scraper {
                 "purpose2", "purpose3", "purpose4", "purpose5", "purpose6", "purpose7", "purpose8", "purpose9", "purpose10",
                 "productLink", "picture", "information", "brand", "volume", "barcode", "composition", "navigation1", "navigation2", "navigation3", "navigation4", "navigation5"};
         writer.writeNext(header);
-        Elements lines = Jsoup.connect(URL_START + "en/brendy/").get().select("div.brands-list");
+        Elements lines = Jsoup.connect(URL_START + "/en/brendy/").get().select("div.brands-list");
         for (Element line : lines.select("div.item")) {
             getProductsForLine(URL_START + line.select("a.item_w").attr("href"),
                     line.select("a.item_w").attr("title"));
