@@ -21,12 +21,12 @@ public class Scraper {
     private CSVWriter writer;
 
     public void getAllLines() throws IOException {
-        writer = new CSVWriter(new FileWriter("C:\\Users\\Minwa\\IdeaProjects\\Scraper\\Scrap\\src\\belita\\belita.csv"));
+        writer = new CSVWriter(new FileWriter("C:\\Users\\Minwa\\IdeaProjects\\Scraper\\Scrap\\src\\belita\\belitaRU.csv"));
         String[] header = {"title", "lineTitle", "purpose1",
                 "purpose2", "purpose3", "purpose4", "purpose5", "purpose6", "purpose7", "purpose8", "purpose9", "purpose10",
                 "productLink", "picture", "information", "brand", "volume", "barcode", "composition", "navigation1", "navigation2", "navigation3", "navigation4", "navigation5"};
         writer.writeNext(header);
-        Elements lines = Jsoup.connect(URL_START + "/en/brendy/").get().select("div.brands-list");
+        Elements lines = Jsoup.connect(URL_START + "/brendy/").get().select("div.brands-list");
         for (Element line : lines.select("div.item")) {
             getProductsForLine(URL_START + line.select("a.item_w").attr("href"),
                     line.select("a.item_w").attr("title"));
@@ -36,6 +36,7 @@ public class Scraper {
 
     public void getProductsForLine(String lineURL, String lineTitle) throws IOException {
         Elements products = Jsoup.connect(lineURL).get().select("div.sl-catalog-wrap");
+        String anotherTitle = Jsoup.connect(lineURL).get().select("div.container").select("div.b-content_wrap").select("h1").text();
         Line line = new Line(lineTitle);
         lines.add(line);
         for (Element product : products.select("div.slide")) {
@@ -59,7 +60,7 @@ public class Scraper {
                 }
             }
             wantedProduct.setTitle(product.select("div.ttl").text()); // ADDED PRODUCT TITLE
-            wantedProduct.setLineTitle(lineTitle); // ADDED PRODUCT LINE TITLE
+            wantedProduct.setLineTitle(anotherTitle); // ADDED PRODUCT LINE TITLE
             getProductInfo(URL_START + product.select("a").attr("href"), wantedProduct);
             line.addProduct(wantedProduct);
 //            String[] header = {"title", "lineTitle", "purpose1",
