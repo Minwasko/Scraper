@@ -1,0 +1,25 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="Scrap:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Scrap_jar</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="src/Menu.java" />
+        <option name="description" value="" />
+        <option name="height" value="600" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="Scraper menu" />
+        <option name="vendor" value="" />
+        <option name="version" value="" />
+        <option name="width" value="800" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="module-output" name="Scrap" />
+      <element id="library" level="project" name="opencsv-5.2" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/Programming/gson-2.8.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/Programming/jsoup-1.13.1.jar" path-in-jar="/" />
+      <element id="library" level="project" name="gson-2.8.2" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/Programming/opencsv-5.2.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

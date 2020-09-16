@@ -17,7 +17,7 @@ public class Menu extends Application {
     private static final int WINDOW_SIZE = 600;
     private Scraper belitaScraper = new Scraper();
     private ScraperOne belkosmexScraper = new ScraperOne();
-    private boolean scrapingBelita, startedScraping, englishLanguageChosen;
+    private boolean scrapingBelita, startedScraping, englishLanguageChosen, finishedScraping;
 
     public static void main(String[] args) {
         launch(args);
@@ -123,53 +123,56 @@ public class Menu extends Application {
         startButton.setScaleX(2);
         startButton.setScaleY(2);
         root.getChildren().add(startButton);
-        // loading text
-        Label loadingText = new Label();
-        int loadingPercent = 10;
-        loadingText.setText("Loading: " + loadingPercent + "%");
-        loadingText.setFont(Font.font(20));
-        loadingText.setTranslateX(-20);
-        loadingText.setTranslateY(250);
-        root.getChildren().add(loadingText);
+        // finished text
+        Label finishedText = new Label();
+        finishedText.setText("FINISHED!!!");
+        finishedText.setFont(Font.font(20));
+        finishedText.setTranslateX(-20);
+        finishedText.setTranslateY(250);
+        root.getChildren().add(finishedText);
+        finishedText.setVisible(false);
         // start button event handler
         startButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 e -> {
-            if (!startedScraping) {
-                if (englishLanguageChosen) {
-                    if (scrapingBelita) {
-                        belitaScraper.setLanguage("English");
-                        try {
-                            belitaScraper.getAllLines();
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
-                    } else {
-                        belkosmexScraper.setLanguage("English");
-                        try {
-                            belkosmexScraper.getAllLines();
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
+                    if (!startedScraping) {
+                        finishedText.setVisible(false);
+                        if (englishLanguageChosen) {
+                            if (scrapingBelita) {
+                                belitaScraper.setLanguage("English");
+                                try {
+                                    belitaScraper.getAllLines();
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
+                            } else {
+                                belkosmexScraper.setLanguage("English");
+                                try {
+                                    finishedScraping = belkosmexScraper.getAllLines();
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                        } else {
+                            if (scrapingBelita) {
+                                belitaScraper.setLanguage("Russian");
+                                try {
+                                    belitaScraper.getAllLines();
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
+                            } else {
+                                belkosmexScraper.setLanguage("Russian");
+                                try {
+                                    finishedScraping = belkosmexScraper.getAllLines();
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
                         }
                     }
-                } else {
-                    if (scrapingBelita) {
-                        belitaScraper.setLanguage("Russian");
-                        try {
-                            belitaScraper.getAllLines();
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
-                    } else {
-                        belkosmexScraper.setLanguage("Russian");
-                        try {
-                            belkosmexScraper.getAllLines();
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                }
-            }
-            startedScraping = true;
-                    });
+                });
+        if (finishedScraping) {
+            finishedText.setVisible(true);
+        }
     }
 }
