@@ -15,18 +15,31 @@ import org.jsoup.select.Elements;
 
 public class Scraper {
 
-    private static final String URL_START = "http://belita.by";
+    private static String URL_START = "http://belita.by";
+    private static String ENGLISH_RUSSIAN_URL = "/brendy/";
+    private static String FILE_NAME = "belita";
 
     List<Line> lines = new LinkedList<>();
     private CSVWriter writer;
 
+
+    public void setLanguage(String language) {
+        if (language.equals("English")) {
+            ENGLISH_RUSSIAN_URL = "/en/brendy/";
+            FILE_NAME = "belitaEN.csv";
+        } else if (language.equals("Russian")){
+            ENGLISH_RUSSIAN_URL = "/brendy/";
+            FILE_NAME = "belitaRU.csv";
+        }
+    }
+
     public void getAllLines() throws IOException {
-        writer = new CSVWriter(new FileWriter("C:\\Users\\Minwa\\IdeaProjects\\Scraper\\Scrap\\src\\belita\\belitaRU.csv"));
+        writer = new CSVWriter(new FileWriter("C:\\Users\\Minwa\\IdeaProjects\\Scraper\\Scrap\\src\\belita\\" + FILE_NAME));
         String[] header = {"title", "lineTitle", "purpose1",
                 "purpose2", "purpose3", "purpose4", "purpose5", "purpose6", "purpose7", "purpose8", "purpose9", "purpose10",
                 "productLink", "picture", "information", "brand", "volume", "barcode", "composition", "navigation1", "navigation2", "navigation3", "navigation4", "navigation5"};
         writer.writeNext(header);
-        Elements lines = Jsoup.connect(URL_START + "/brendy/").get().select("div.brands-list");
+        Elements lines = Jsoup.connect(URL_START + ENGLISH_RUSSIAN_URL).get().select("div.brands-list");
         for (Element line : lines.select("div.item")) {
             getProductsForLine(URL_START + line.select("a.item_w").attr("href"),
                     line.select("a.item_w").attr("title"));
@@ -122,13 +135,5 @@ public class Scraper {
             product.setProductNavigationFive(productNavigationTabs.get(4).text());
         } catch (Exception ignored) { }
         return product;
-    }
-
-    public static void main(String[] args) throws IOException {
-        long start = System.currentTimeMillis();
-        Scraper scraper = new Scraper();
-        scraper.getAllLines();
-        long end = System.currentTimeMillis();
-        System.out.println((end - start) / 1000);
     }
 }

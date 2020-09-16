@@ -2,8 +2,8 @@ package belkosmex;
 
 public class Product {
 
-    private String productNavigationOne = "Main"; //
-    private String productNavigationTwo = "Catalog"; //
+    public static String productNavigationOne = "Main"; //
+    public static String productNavigationTwo = "Catalog"; //
     private String productNavigationThree; //
     private String productNavigationFour; //
     private String title; //
@@ -20,7 +20,7 @@ public class Product {
     }
 
     public void setProductNavigationOne(String productNavigationOne) {
-        this.productNavigationOne = productNavigationOne;
+        Product.productNavigationOne = productNavigationOne;
     }
 
     public String getProductNavigationTwo() {
@@ -28,7 +28,7 @@ public class Product {
     }
 
     public void setProductNavigationTwo(String productNavigationTwo) {
-        this.productNavigationTwo = productNavigationTwo;
+        Product.productNavigationTwo = productNavigationTwo;
     }
 
     public String getProductNavigationThree() {

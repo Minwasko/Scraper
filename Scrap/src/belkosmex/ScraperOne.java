@@ -13,9 +13,20 @@ import org.jsoup.select.Elements;
 
 
 
-public class Scraper {
+public class ScraperOne {
 
     private static final String URL_START = "https://belkosmex.by";
+    private static String FILE_NAME = "belkosmexEN.csv";
+    private static String RUSSIAN_ENGLISH_URL_FACE = "/en/catalog/for_the_face/";
+    private static String RUSSIAN_ENGLISH_URL_BODY = "/en/catalog/body/";
+    private static String RUSSIAN_ENGLISH_URL_HAIR = "/en/catalog/hair/";
+    private static String RUSSIAN_ENGLISH_URL_CHILDREN = "/en/catalog/baby_care/";
+    private static String RUSSIAN_ENGLISH_URL_SUN = "/en/catalog/sun/";
+    private static String FACE = "Skincare";
+    private static String BODY = "Body Care";
+    private static String HAIR = "Hair Care";
+    private static String CHILDREN = "Children Care";
+    private static String SUN = "Sunscreen";
 
     private CSVWriter writer;
     private String catalogName;
@@ -28,15 +39,47 @@ public class Scraper {
 
     // FOR RUSSIAN VERSION REMOVE /en/ FOR CATALOG NAMES, CHANGE catalogName AND CHANGE 1st 2 STRINGS IN PRODUCT CLASS
 
+    public void setLanguage(String language) {
+        if (language.equals("English")) {
+            FILE_NAME = "belkosmexEN.csv";
+            FACE = "Skincare";
+            BODY = "Body Care";
+            HAIR = "Hair Care";
+            CHILDREN = "Children Care";
+            SUN = "Sunscreen";
+            RUSSIAN_ENGLISH_URL_FACE = "/en/catalog/for_the_face/";
+            RUSSIAN_ENGLISH_URL_BODY = "/en/catalog/body/";
+            RUSSIAN_ENGLISH_URL_HAIR = "/en/catalog/hair/";
+            RUSSIAN_ENGLISH_URL_CHILDREN = "/en/catalog/baby_care/";
+            RUSSIAN_ENGLISH_URL_SUN = "/en/catalog/sun/";
+            Product.productNavigationOne = "Main";
+            Product.productNavigationTwo = "Catalog";
+        } else if (language.equals("Russian")) {
+            FILE_NAME = "belkosmexRU.csv";
+            FACE = "Для лица";
+            BODY = "Для тела";
+            HAIR = "Для волос";
+            CHILDREN = "Детская косметика";
+            SUN = "Защита от солнца";
+            RUSSIAN_ENGLISH_URL_FACE = "/catalog/for_the_face/";
+            RUSSIAN_ENGLISH_URL_BODY = "/catalog/body/";
+            RUSSIAN_ENGLISH_URL_HAIR = "/catalog/hair/";
+            RUSSIAN_ENGLISH_URL_CHILDREN = "/catalog/baby_care/";
+            RUSSIAN_ENGLISH_URL_SUN = "/catalog/sun/";
+            Product.productNavigationOne = "Главная";
+            Product.productNavigationTwo = "Каталог";
+        }
+    }
+
     public void getAllLines() throws IOException {
-        writer = new CSVWriter(new FileWriter("C:\\Users\\Minwa\\IdeaProjects\\Scraper\\Scrap\\src\\belkosmex\\belkosmexEN.csv"));
+        writer = new CSVWriter(new FileWriter("C:\\Users\\Minwa\\IdeaProjects\\Scraper\\Scrap\\src\\belkosmex\\" + FILE_NAME));
         String[] header = {"title", "lineTitle", "volume", "link", "picture", "information", "usage", "composition", "navigation1", "navigation2", "navigation3", "navigation4"};
         writer.writeNext(header);
         // for face
-        Elements catalogFace = Jsoup.connect(URL_START + "/en/catalog/for_the_face/").get().select("div.g-main").select("div.row");
+        Elements catalogFace = Jsoup.connect(URL_START + RUSSIAN_ENGLISH_URL_FACE).get().select("div.g-main").select("div.row");
         Elements subCatalogFace = catalogFace.select("aside.g-sidebar").select("li.item_1").get(0).select("ul.menu_level_2").select("li.item_2");
         subCatalogName = "";
-        catalogName = "Skincare";
+        catalogName = FACE;
         for (Element subCatalog : subCatalogFace) {
             subCatalogName = subCatalog.text();
             subCatalogLink = subCatalog.select("a[href]").attr("href");
@@ -48,9 +91,9 @@ public class Scraper {
             }
         }
         // FOR BODY
-        Elements catalogBody = Jsoup.connect(URL_START + "/en/catalog/body/").get().select("div.g-main").select("div.row");
+        Elements catalogBody = Jsoup.connect(URL_START + RUSSIAN_ENGLISH_URL_BODY).get().select("div.g-main").select("div.row");
         Elements subCatalogBody = catalogBody.select("aside.g-sidebar").select("li.item_1").get(1).select("ul.menu_level_2").select("li.item_2");
-        catalogName = "Body Care";
+        catalogName = BODY;
         for (Element subCatalog : subCatalogBody) {
             subCatalogName = subCatalog.text();
             subCatalogLink = subCatalog.select("a[href]").attr("href");
@@ -62,9 +105,9 @@ public class Scraper {
             }
         }
         // FOR HAIR
-        Elements catalogHair = Jsoup.connect(URL_START + "/en/catalog/hair/").get().select("div.g-main").select("div.row");
+        Elements catalogHair = Jsoup.connect(URL_START + RUSSIAN_ENGLISH_URL_HAIR).get().select("div.g-main").select("div.row");
         Elements subCatalogHair = catalogHair.select("aside.g-sidebar").select("li.item_1").get(2).select("ul.menu_level_2").select("li.item_2");
-        catalogName = "Hair Care";
+        catalogName = HAIR;
         for (Element subCatalog : subCatalogHair) {
             subCatalogName = subCatalog.text();
             subCatalogLink = subCatalog.select("a[href]").attr("href");
@@ -76,15 +119,15 @@ public class Scraper {
             }
         }
         // BABY CARE
-        Elements catalogBabyCare = Jsoup.connect(URL_START + "/en/catalog/baby_care/").get().select("div.g-main").select("div.row");
+        Elements catalogBabyCare = Jsoup.connect(URL_START + RUSSIAN_ENGLISH_URL_CHILDREN).get().select("div.g-main").select("div.row");
         Element subCatalogBabyCare = catalogBabyCare.select("aside.g-sidebar").select("li.item_1").get(3);
-        catalogName = "Children Care";
-        getProductsFromPage(URL_START + "/catalog/baby_care/");
+        catalogName = CHILDREN;
+        getProductsFromPage(URL_START + RUSSIAN_ENGLISH_URL_CHILDREN);
         // SUN CARE
-        Elements catalogSunCare = Jsoup.connect(URL_START + "/en/catalog/sun/").get().select("div.g-main").select("div.row");
+        Elements catalogSunCare = Jsoup.connect(URL_START + RUSSIAN_ENGLISH_URL_SUN).get().select("div.g-main").select("div.row");
         Element subCatalogSunCare = catalogBabyCare.select("aside.g-sidebar").select("li.item_1").get(4);
-        catalogName = "Sunscreen";
-        getProductsFromPage(URL_START + "/catalog/sun/");
+        catalogName = SUN;
+        getProductsFromPage(URL_START + RUSSIAN_ENGLISH_URL_SUN);
 //        System.out.println(allProducts.toString());
         writer.close();
     }
@@ -198,13 +241,5 @@ public class Scraper {
 
     public Product getProductInfo(String productURL, Product product) throws IOException {
         return null;
-    }
-
-    public static void main(String[] args) throws IOException {
-        long start = System.currentTimeMillis();
-        Scraper scraper = new Scraper();
-        scraper.getAllLines();
-        long end = System.currentTimeMillis();
-        System.out.println((end - start) / 1000);
     }
 }
